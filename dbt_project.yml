@@ -1,7 +1,7 @@
 config-version: 2
 
 name: ab2ft_stripe
-version: 0.0.1
+version: 0.1.0
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 
 # Default for running on Splitgraph Cloud
@@ -20,7 +20,10 @@ vars:
   #
   # Patch it to do:
   # Airbyte Stripe schema -> splitgraph/ab2ft_stripe -> fivetran/stripe_source -> fivetran/stripe
-  #
+
+  # The payment_method stream doesn't seem to be replicated by Airbyte, so set this to False.
+  using_payment_method: False
+
   stripe_source:
     balance_transaction: '{{ ref(''ab2ft_src_balance_transaction'') }}'
     card: '{{ ref(''ab2ft_src_card'') }}'
@@ -38,6 +41,7 @@ vars:
     plan: '{{ ref(''ab2ft_src_plan'') }}'
     credit_note: '{{ ref(''ab2ft_src_credit_note'') }}'
     credit_note_line_item: '{{ ref(''ab2ft_src_credit_note_line_item'') }}'
+
   ab2ft_stripe:
     airbyte_raw_subscriptions: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_subscriptions'') }}'
     airbyte_raw_balance_transactions: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_balance_transactions'') }}'
