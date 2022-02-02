@@ -1,0 +1,49 @@
+config-version: 2
+
+name: ab2ft_stripe
+version: 0.0.1
+require-dbt-version: [">=1.0.0", "<2.0.0"]
+
+models:
+  stripe_source:
+    materialized: view
+  ab2ft_stripe:
+    staging:
+      ab2ft_src:
+        materialized: ephemeral
+vars:
+  # Standard data flow:
+  # Fivetran Stripe schema -> fivetran/stripe_source -> fivetran/stripe
+  #
+  # Patch it to do:
+  # Airbyte Stripe schema -> splitgraph/ab2ft_stripe -> fivetran/stripe_source -> fivetran/stripe
+  #
+  stripe_source:
+    balance_transaction: '{{ ref(''ab2ft_src_balance_transaction'') }}'
+    card: '{{ ref(''ab2ft_src_card'') }}'
+    charge: '{{ ref(''ab2ft_src_charge'') }}'
+    customer: '{{ ref(''ab2ft_src_customer'') }}'
+    fee: '{{ ref(''ab2ft_src_fee'') }}'
+    payment_intent: '{{ ref(''ab2ft_src_payment_intent'') }}'
+    payment_method_card: '{{ ref(''ab2ft_src_payment_method_card'') }}'
+    payment_method: '{{ ref(''ab2ft_src_payment_method'') }}'
+    payout: '{{ ref(''ab2ft_src_payout'') }}'
+    refund: '{{ ref(''ab2ft_src_refund'') }}'
+    invoice_line_item: '{{ ref(''ab2ft_src_invoice_line_item'') }}'
+    invoice: '{{ ref(''ab2ft_src_invoice'') }}'
+    subscription: '{{ ref(''ab2ft_src_subscription'') }}'
+    plan: '{{ ref(''ab2ft_src_plan'') }}'
+    credit_note: '{{ ref(''ab2ft_src_credit_note'') }}'
+    credit_note_line_item: '{{ ref(''ab2ft_src_credit_note_line_item'') }}'
+  ab2ft_stripe:
+    airbyte_raw_subscriptions: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_subscriptions'') }}'
+    airbyte_raw_balance_transactions: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_balance_transactions'') }}'
+    airbyte_raw_invoices: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_invoices'') }}'
+    airbyte_raw_charges: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_charges'') }}'
+    airbyte_raw_payouts: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_payouts'') }}'
+    airbyte_raw_customer_balance_transactions: '{{ source(''airbyte_raw_stripe'',''_airbyte_raw_customer_balance_transactions'') }}'
+    airbyte_raw_customers: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_customers'') }}'
+    airbyte_raw_refunds: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_refunds'') }}'
+    airbyte_raw_payment_intents: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_payment_intents'') }}'
+    airbyte_raw_invoice_line_items: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_invoice_line_items'') }}'
+    airbyte_raw_plans: '{{ source(''airbyte_raw_stripe'', ''_airbyte_raw_plans'') }}'
