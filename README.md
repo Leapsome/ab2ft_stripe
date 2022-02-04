@@ -27,7 +27,6 @@ Note that this was automatically generated from:
 
 * [JSONSchema output by Airbyte's Stripe source](https://github.com/airbytehq/airbyte/tree/master/airbyte-integrations/connectors/source-stripe/source_stripe/schemas)
 * [schema required by Fivetran's Stripe source](https://github.com/fivetran/dbt_stripe_source/blob/main/models/src_stripe.yml)
-  .
 
 Some manual matching has been done but some columns expected by Fivetran's
 package don't exist in Airbyte's output schema. For a full list, see the
@@ -110,8 +109,8 @@ vars:
     stripe_schema: your_schema_name
 ```
 
-You can also override the names of the raw Airbyte tables with the stream 
-dumps as follows:
+You can also override the names of the raw Airbyte tables with the streams 
+as follows:
 
 ```yaml
 # dbt_project.yml
@@ -125,7 +124,7 @@ vars:
 ```
 
 See [the original Fivetran repository](https://github.com/fivetran/dbt_stripe)
-for configuration of the downstream Fivetran model.
+for the configuration of the downstream Fivetran model.
 
 ### Database support
 
@@ -224,10 +223,8 @@ sgr cloud load --skip-external
 ```
 
 The results will be available at
-[https://www.splitgraph.com/MY_SPLITGRAPH_USERNAME/stripe](https://www.splitgraph.com/MY_SPLITGRAPH_USERNAME/stripe)
-.
+[https://www.splitgraph.com/MY_SPLITGRAPH_USERNAME/stripe](https://www.splitgraph.com/MY_SPLITGRAPH_USERNAME/stripe).
 
 For advanced configuration, including getting Splitgraph Cloud to run this for
-you on a scheulde, see the
-[documentation for `splitgraph.yml`](https://www.splitgraph.com/docs/splitgraph-cloud/splitgraph-yml)
-.
+you on a schedule, see the
+[documentation for `splitgraph.yml`](https://www.splitgraph.com/docs/splitgraph-cloud/splitgraph-yml).
